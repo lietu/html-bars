@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body, html {
+            background: transparent;
+        }
+
+        progress {
+            display: block;
+            margin: 20px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    var settings = {
+        bar: null
+    }
+    var bars = {}
+    var body = document.body
+    var baseUrl = (function () {
+        var l = window.location
+        return l.protocol + "//" + l.host + "/"
+    })()
+
+    function update(data) {
+        // console.log("Update", data)
+        for (var name in data) {
+            if (settings.bar === null || settings.bar === name) {
+                var bar = null
+                if (bars[name]) {
+                    bar = bars[name]
+                } else {
+                    bar = document.createElement("progress")
+                    body.appendChild(bar)
+                    bars[name] = bar
+                }
+
+                bar.max = data[name].max
+                bar.value = data[name].value
+            }
+        }
+    }
+
+    function load() {
+        fetch(new Request("/data.json")).then(function (response) {
+            response.json().then(function (data) {
+                update(data)
+            })
+        })
+    }
+
+    function start() {
+        var location = String(window.location)
+        if (location.length > baseUrl.length) {
+            settings.bar = location.substr(baseUrl.length)
+        }
+
+        // console.log("Settings", settings)
+        setInterval(load, 250)
+    }
+
+    start()
+</script>
+</body>
+</html>

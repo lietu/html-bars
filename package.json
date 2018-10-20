@@ -1,0 +1,9 @@
+{
+  "name": "bars",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "backend": "node index.js"
+  },
+  "license": "WTFPL-2"
+}
