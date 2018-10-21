@@ -32,6 +32,8 @@ Then run:
 npm run backend
 ```
 
+Alternatively on windows you can just double-click on the `run.bat` file.
+
 
 ## Running frontend
 
